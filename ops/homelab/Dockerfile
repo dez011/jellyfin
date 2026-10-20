@@ -14,4 +14,4 @@ LABEL org.opencontainers.image.source="https://github.com/dez011/jellyfin" \
 RUN find /usr/lib/jellyfin/bin -mindepth 1 -delete
 COPY --from=tested /publish/ /usr/lib/jellyfin/bin/
 COPY --from=tested /test-results/ /homelab-test-results/
-RUN /usr/lib/jellyfin/bin/jellyfin --version | grep -E '^Jellyfin.Server 12\.0\.0|^Jellyfin 12\.0\.0|^12\.0\.0'
+RUN /usr/lib/jellyfin/bin/jellyfin --version 2>&1 | grep -Fx 'Jellyfin.Server 12.0.0.0'
