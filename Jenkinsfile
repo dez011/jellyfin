@@ -45,5 +45,25 @@ docker run --rm -i --user 0:0 --network host --entrypoint python3 \
       }
     }
   }
-  post { always { archiveArtifacts artifacts: 'test-results/**/*.trx', allowEmptyArchive: true } }
+  post {
+    always { archiveArtifacts artifacts: 'test-results/**/*.trx', allowEmptyArchive: true }
+    success {
+      sh '''#!/bin/sh
+set -eu
+docker run --rm -i --network host --entrypoint python3 \
+ -v /srv/homelab/secrets/matrix/ci-bot.access-token:/run/ci-matrix-token:ro \
+ -v /srv/homelab/secrets/matrix/development-ci.room-id:/run/ci-matrix-room:ro \
+ local/jenkins-controller:latest - "$BUILD_NUMBER" "$BUILD_URL" success < ops/homelab/notify.py
+'''
+    }
+    failure {
+      sh '''#!/bin/sh
+set -eu
+docker run --rm -i --network host --entrypoint python3 \
+ -v /srv/homelab/secrets/matrix/ci-bot.access-token:/run/ci-matrix-token:ro \
+ -v /srv/homelab/secrets/matrix/development-ci.room-id:/run/ci-matrix-room:ro \
+ local/jenkins-controller:latest - "$BUILD_NUMBER" "$BUILD_URL" failure < ops/homelab/notify.py
+'''
+    }
+  }
 }
