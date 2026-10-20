@@ -4,6 +4,8 @@ pipeline {
   stages {
     stage('Validate Docker VM and exact source') {
       steps {
+        dir('test-results') { deleteDir() }
+        dir('ops/homelab/__pycache__') { deleteDir() }
         sh '''#!/bin/sh
 set -eu
 test "$(docker info --format '{{.Name}}')" = docker
