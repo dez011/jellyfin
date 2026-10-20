@@ -39,6 +39,7 @@ set -eu
 sha=$(git rev-parse HEAD)
 docker run --rm -i --user 0:0 --network host --entrypoint python3 \
  -v /var/run/docker.sock:/var/run/docker.sock \
+ -v /usr/libexec/docker/cli-plugins/docker-compose:/usr/local/lib/docker/cli-plugins/docker-compose:ro \
  -v /srv/homelab/stacks/media/yams:/srv/homelab/stacks/media/yams \
  -v /opt/yams/config/jellyfin:/opt/yams/config/jellyfin:ro \
  -v /srv/homelab/archive/jellyfin-ci:/srv/homelab/archive/jellyfin-ci \
