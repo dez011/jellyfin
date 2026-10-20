@@ -25,7 +25,7 @@ id=$(docker create "local/jellyfin-homelab:$sha")
 trap 'docker rm "$id" >/dev/null' EXIT
 docker cp "$id:/homelab-test-results" test-results
 test -n "$(find test-results -name '*.trx' -print -quit)"
-docker run --rm --network none --entrypoint /usr/lib/jellyfin/bin/jellyfin "local/jellyfin-homelab:$sha" --version
+docker run --rm --network none --entrypoint /usr/lib/jellyfin/bin/jellyfin "local/jellyfin-homelab:$sha" --version 2>&1 | grep -Fx 'Jellyfin.Server 12.0.0.0'
 '''
       }
     }

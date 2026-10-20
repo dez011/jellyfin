@@ -1,4 +1,7 @@
 .git
+Jenkinsfile
+ops/homelab
+test-results
 .dockerignore
 Dockerfile
 Dockerfile.arm
