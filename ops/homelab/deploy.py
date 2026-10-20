@@ -47,7 +47,7 @@ def main():
     (backup / 'previous-image.txt').write_text(old['Image'] + '\n')
     if previous is not None:
         (backup / OVERRIDE.name).write_bytes(previous)
-    compose = ['docker', 'compose', '--project-directory', str(ROOT), '-p', 'yams',
+    compose = ['docker', 'compose', '--env-file', '/run/yams-runtime.env', '--project-directory', str(ROOT), '-p', 'yams',
         '-f', str(ROOT / 'docker-compose.yaml'), '-f', str(ROOT / 'docker-compose.custom.yaml'), '-f', str(OVERRIDE)]
     OVERRIDE.write_text(json.dumps({'services': {'jellyfin': {'image': image}}}))
     try:
