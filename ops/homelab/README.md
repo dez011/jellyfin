@@ -22,5 +22,7 @@ If a migration ever changes the DB, stop and review restoring the stopped
 configuration archive; switching to an older image alone is not a DB rollback.
 
 The existing daily Mac upstream scout discovers this checkout and its upstream
-remote automatically. Update notices go to Matrix Hermes Updates; incidents go
+remote automatically. Its `homelab.upstreamRef` Git setting selects
+`refs/heads/release-12.z` so stable 12.x changes, not 13.x development, are scanned.
+Update notices go to Matrix Hermes Updates; incidents go
 to IT — Incidents. An update notice does not merge or deploy source.
